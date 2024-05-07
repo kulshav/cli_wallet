@@ -1,12 +1,14 @@
 import typer
 
-from cli.add import add_record_app
+from cli.records import records_app
+from cli.display import display_app
 
 
 app = typer.Typer(no_args_is_help=True, add_completion=False)
 
 # Register cli commands
-app.add_typer(add_record_app, name="add")
+app.add_typer(records_app, name="record")
+app.add_typer(display_app, name="display")
 
 
 # Description of an app
