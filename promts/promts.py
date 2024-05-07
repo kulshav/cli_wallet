@@ -1,6 +1,11 @@
+import random
 
 
 class UserPromt:
+    """
+    Promts messages to user
+    """
+
     @staticmethod
     def ask_to_enter_date() -> str:
         return "Input date in format (YYYY-MM-DD) Press Enter(today) ->"
@@ -43,7 +48,25 @@ class UserPromt:
             f"Description: {desc}"
         )
 
+    @staticmethod
+    def negative_balance() -> str:
+        return ("Your balance is negative!\n"
+                "Maybe just spend less and earn more? It`s that simple")
+
+    @staticmethod
+    def ok_balance() -> str:
+        informative_tip = [
+            "Just spend less and earn more!",
+            "Save money -> dont buy a coffee. Ok, this time it`s just a joke chill...",
+            "Max out your credit cards for that instant gratification. Who needs financial stability anyway?",
+            "You dont need any retirement savings. You'll definitely want to work until you're 95.",
+            "Impulsive buying is the only way to spend money. Source: Trust me bro.",
+            "Don't bother with paying out loans. "
+            "Ignorance is bliss, especially when creditors come knocking for your TV",
+            "Why worry about compound interest when you can just compound your debt instead?"
+        ]
+
+        return f"Very very informative financial tip: {random.choice(informative_tip)}"
+
 
 user_promt = UserPromt()
-
-
