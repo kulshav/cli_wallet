@@ -3,19 +3,19 @@
 class UserPromt:
     @staticmethod
     def ask_to_enter_date() -> str:
-        return "Enter the date in format (YYYY-MM-DD) Press Enter(today) ->"
+        return "Input date in format (YYYY-MM-DD) Press Enter(today) ->"
 
     @staticmethod
     def ask_to_enter_category() -> str:
-        return "Enter the category - (Income | Expense) Press Enter ->"
+        return "Input the category - (Income | Expense) Press Enter ->"
 
     @staticmethod
     def ask_to_enter_amount() -> str:
-        return "Enter the amount"
+        return "Input the amount"
 
     @staticmethod
     def ask_to_enter_desc() -> str:
-        return "Enter the description (Press Enter to skip)"
+        return "Input the description (Press Enter to skip)"
 
     @staticmethod
     def wrong_date_input_format() -> str:
@@ -31,7 +31,7 @@ class UserPromt:
 
     @staticmethod
     def input_not_number():
-        return "You did not enter a number!\nThe correct format is: 1000, 1000.00\n\nUse the --help flag for assistance"
+        return "Amount is not a number!\nThe correct format is: 1000, 1000.00\n\nUse the --help flag for assistance"
 
     @staticmethod
     def successful_record_input(date, category, amount, desc) -> str:
