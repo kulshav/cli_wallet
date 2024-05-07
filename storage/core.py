@@ -8,7 +8,7 @@ from loguru import logger
 from configs.config import settings
 
 
-class StorageData(Enum):
+class StorageDataEnum(Enum):
     date: str = "Date"
     category: str = "Category"
     amount: str = "Amount"
@@ -30,10 +30,10 @@ class StorageManager:
                 writer = csv.writer(file)
                 writer.writerow(
                     [
-                        StorageData.date.value,
-                        StorageData.category.value,
-                        StorageData.amount.value,
-                        StorageData.desc.value,
+                        StorageDataEnum.date.value,
+                        StorageDataEnum.category.value,
+                        StorageDataEnum.amount.value,
+                        StorageDataEnum.desc.value,
                     ]
                 )
             logger.success("Storage created!")
