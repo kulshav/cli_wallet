@@ -36,7 +36,7 @@ def insert_record(
     record add --i for interactive mode
     """
 
-    if i:
+    if i:  # User have chosen interactive mode
         try:
             date, category, amount, desc = interactive_handler.record_insert()
         except TypeError:
