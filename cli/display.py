@@ -53,8 +53,8 @@ def income_command(
 @display_app.command(name="expense")
 def expense_command(
     year: Annotated[int, None] = datetime.now().year,
-    month: Annotated[int, None] = datetime.now().month,
-    day: Annotated[int, None] = datetime.now().day,
+    month: Annotated[int, None] = None,
+    day: Annotated[int, None] = None,
     i: bool = False,  # Interactive mode shortened to --i for simple usage purposes
 ) -> None | Exit:
     """
