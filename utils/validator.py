@@ -1,9 +1,7 @@
-from enum import Enum
 from datetime import datetime
-from typing import Any
+from enum import Enum
 
 from pydantic import BaseModel, field_validator
-from pydantic.main import Model
 
 from promts.promts import user_promt
 
@@ -26,6 +24,8 @@ class InputValidator(BaseModel):
     record_id: int
     record_data: dict
     search_data: dict
+
+    date_as_number: int
 
     def __call__(
         self,
@@ -96,3 +96,23 @@ class InputValidator(BaseModel):
             raise ValueError(user_promt.not_found_any_records())
 
         return search_data
+
+    @field_validator("date_as_number")
+    def validate_date_as_number(cls, date_list: list) -> list | ValueError:
+        """
+        Validates list[year, month, day]
+        """
+        # validate years
+        try:
+            if date_list[0] <= 0:
+                raise ValueError(user_promt.negative_or_zero_date())
+            # validate months
+            if 12 <= date_list[1] <= 0:
+                raise ValueError(user_promt.month_not_exists())
+            # validate days
+            if 31 <= date_list[2] <= 0:
+                raise ValueError(user_promt.day_not_exists())
+        except TypeError:
+            pass
+
+        return date_list
