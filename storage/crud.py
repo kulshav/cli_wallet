@@ -119,8 +119,8 @@ class QueryManager(StorageManager):
                     StorageDataEnum.record_id: index,
                     StorageDataEnum.date: row[StorageDataEnum.date],
                     StorageDataEnum.category: row[StorageDataEnum.category],
-                    StorageDataEnum.amount: row[StorageDataEnum.category],
-                    StorageDataEnum.desc: row[StorageDataEnum.category],
+                    StorageDataEnum.amount: row[StorageDataEnum.amount],
+                    StorageDataEnum.desc: row[StorageDataEnum.desc],
                 }
             )
 
