@@ -1,29 +1,30 @@
-import csv
-
 from datetime import datetime
+
+from click.exceptions import Exit
 from typing_extensions import Annotated
 
 import typer
 
-from pydantic import ValidationError
-
-from utils.validator import InputValidator, CategoryEnum
-from handlers.interactive_mode import interactive_handler
-from storage.crud import query
+from handlers.records_handler import RecordApp
+from utils.validator import CategoryEnum
 from promts.promts import user_promt
 
 
-records_app = typer.Typer(
+records_app = RecordApp(
     no_args_is_help=True,
     add_completion=False,
-    short_help="Use to create or edit income/expense and search for records"
+    short_help="Use to create, search or edit income/expense records",
 )
 
 
-@records_app.command(name="add", no_args_is_help=True, short_help="Use to insert new income or expense record")
+@records_app.command(
+    name="add",
+    no_args_is_help=True,
+    short_help="Use to insert new income or expense record",
+)
 def insert_record(
     date: Annotated[str, None] = datetime.now().strftime("%Y-%m-%d"),
-    category: Annotated[str, None] = CategoryEnum.expense.value,
+    category: Annotated[str, None] = CategoryEnum.expense,
     amount: float = 0.0,
     desc: Annotated[str, None] = "",
     i: bool = False,  # Interactive mode shortened to --i for simple usages purposes
@@ -35,38 +36,72 @@ def insert_record(
 
     record add --i for interactive mode
     """
-
-    if i:  # User have chosen interactive mode
-        try:
-            date, category, amount, desc = interactive_handler.record_insert()
-        except TypeError:
-            return typer.Exit()
-    else:
-        try:
-            InputValidator(date=date, category=category, amount=amount, description=desc)
-        except ValidationError as error:
-            typer.echo(error)
-            typer.Exit()
-            return
-
     try:
-        query.insert_new_record(date=date, category=category, amount=amount, desc=desc)
-    except (IOError, csv.Error) as error:
+        validated_record = records_app.insert_record(date, category, amount, desc, i)
+        return typer.echo(
+            user_promt.successful_record_input(
+                date=validated_record,
+                category=category,
+                amount=amount,
+                desc=desc,
+            )
+        )
+    except (ValueError, TypeError) as error:
         typer.echo(error)
         typer.Exit()
-        return
-
-    return typer.echo(
-        user_promt.successful_record_input(
-            date=date,
-            category=category,
-            amount=amount,
-            desc=desc,
-        )
-    )
 
 
-@records_app.command(name="search")
-def get_record():
-    """Gets full data of the existing record interactively"""
-    pass
+@records_app.command(
+    name="search",
+    no_args_is_help=True,
+    short_help="Use to search by date | category | amount",
+)
+def find_records(
+    date: Annotated[str, None] = None,
+    category: Annotated[str, None] = None,
+    amount: float = None,
+    desc: str = None,
+) -> None | Exit:
+    """
+    Searching for specific records
+
+    search --date=2024-02-02 --category=Expense --amount=500.00 --desc="Groceries"
+
+    --i interactive search (Recommended)
+    """
+    try:
+        echo_msg = records_app.search_records(date, category, amount, desc)
+        return typer.echo(echo_msg)
+    except ValueError as error:
+        typer.echo(error)
+        return typer.Exit()
+
+
+@records_app.command(
+    name="edit",
+    no_args_is_help=True,
+    short_help="Use to edit any record, requires record_id",
+)
+def edit_records(
+    record_id: Annotated[int, None] = None,
+    date: Annotated[str, None] = None,
+    category: Annotated[str, None] = None,
+    amount: float = None,
+    desc: str = None,
+    i: bool = False,  # Interactive mode shortened to --i for simple usages purposes
+):
+    """
+    Edits any record by its ID\n
+    If you need to know record_id -> use 'record search' command\n\n
+
+    Edit without checking record (Not recommended)\n
+    edit --record-id=1 --date=2024-02-02 --category=Expense --amount=500.00 --desc="Groceries"\n\n
+
+    --i for interactive mode (Recommended)
+    """
+    try:
+        echo_msg = records_app.edit_record(record_id, date, category, amount, desc, i)
+        return typer.echo(f"Record successfully updated!\n\n{echo_msg}")
+    except (ValueError, TypeError) as error:
+        typer.echo(error)
+        return typer.Exit()
