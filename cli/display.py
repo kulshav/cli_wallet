@@ -1,30 +1,76 @@
+from datetime import datetime
+from typing import Annotated
+
 import typer
 
-from storage.crud import query
-from promts.promts import user_promt
+from typer import Exit
 
-display_app = typer.Typer(
+from utils.validator import CategoryEnum
+from handlers.display_handler import DisplayApp
+
+
+display_app = DisplayApp(
     no_args_is_help=True,
     add_completion=False,
-    short_help="Shows wallet data: Balance, Income, Expense"
+    short_help="Shows wallet data: Balance, Income, Expense",
 )
 
 
 @display_app.command(name="balance")
-def display_current_balance():
+def balance_command():
     """
     Shows current balance
     """
-    current_balance = query.get_current_balance()
+    return display_app.get_balance()
 
-    echo_msg = user_promt.ok_balance()
 
-    # Just for giggles
-    if current_balance < 0:
-        echo_msg = user_promt.negative_balance()
+@display_app.command(name="income")
+def income_command(
+    year: Annotated[int, None] = datetime.now().year,
+    month: Annotated[int, None] = None,
+    day: Annotated[int, None] = None,
+    i: bool = False,  # Interactive mode shortened to --i for simple usage purposes
+) -> None | Exit:
+    """
+    Shows total income with optional filters by year, month, and day.
 
-    return typer.echo(
-        f"Balance: {current_balance}\n\n"
-        f"{echo_msg}"
-    )
+    Whole year --year=2024\n
+    Whole month of current year --month=12\n
+    Whole day of current month&year --day=5\n\n
 
+    --i for interactive mode
+    """
+    try:
+        message_result = display_app.display_records(
+            CategoryEnum.income, year, month, day, i
+        )
+        return typer.echo(message_result)
+    except ValueError as error:
+        typer.echo(error)
+        typer.Exit()
+
+
+@display_app.command(name="expense")
+def expense_command(
+    year: Annotated[int, None] = datetime.now().year,
+    month: Annotated[int, None] = datetime.now().month,
+    day: Annotated[int, None] = datetime.now().day,
+    i: bool = False,  # Interactive mode shortened to --i for simple usage purposes
+) -> None | Exit:
+    """
+    Shows total expenses with optional filters by year, month, and day.
+
+    Whole year --year=2024\n
+    Whole month of current year --month=12\n
+    Whole day of current month&year --day=5\n
+
+    --i for interactive mode
+    """
+    try:
+        message_result = display_app.display_records(
+            CategoryEnum.expense, year, month, day, i
+        )
+        return typer.echo(message_result)
+    except ValueError as error:
+        typer.echo(error)
+        typer.Exit()
