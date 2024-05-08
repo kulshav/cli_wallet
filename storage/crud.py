@@ -1,4 +1,6 @@
+import csv
 from datetime import datetime
+from typing import Any
 
 from utils.validator import CategoryEnum
 from storage.core import StorageManager, StorageDataEnum
@@ -8,6 +10,7 @@ class QueryManager(StorageManager):
     """
     Class for executing crud queries from storage
     """
+
     def __init__(self):
         super().__init__()
 
@@ -23,11 +26,11 @@ class QueryManager(StorageManager):
         total_expense = 0.0
 
         for row in rows:
-            if row[StorageDataEnum.category.value] == CategoryEnum.income.value:
-                total_income += float(row[StorageDataEnum.amount.value])
+            if row[StorageDataEnum.category] == CategoryEnum.income:
+                total_income += float(row[StorageDataEnum.amount])
 
-            if row[StorageDataEnum.category.value] == CategoryEnum.expense.value:
-                total_expense += float(row[StorageDataEnum.amount.value])
+            if row[StorageDataEnum.category] == CategoryEnum.expense:
+                total_expense += float(row[StorageDataEnum.amount])
 
         return total_income - total_expense
 
