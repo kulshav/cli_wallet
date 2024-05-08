@@ -8,17 +8,20 @@ from loguru import logger
 from configs.config import settings
 
 
-class StorageDataEnum(Enum):
+class StorageDataEnum(str, Enum):
     date: str = "Date"
     category: str = "Category"
     amount: str = "Amount"
     desc: str = "Description"
+
+    record_id: str = "ID"
 
 
 class StorageManager:
     """
     Provides useful basic CRUD methods
     """
+
     def __init__(self):
         self.path_to_storage = settings.PATH_TO_STORAGE
         self._create_storage()
@@ -26,14 +29,13 @@ class StorageManager:
     def _create_storage(self):
         if not os.path.exists(self.path_to_storage):
             with open(self.path_to_storage, "w") as file:
-                # Write headers to the CSV file
                 writer = csv.writer(file)
                 writer.writerow(
                     [
-                        StorageDataEnum.date.value,
-                        StorageDataEnum.category.value,
-                        StorageDataEnum.amount.value,
-                        StorageDataEnum.desc.value,
+                        StorageDataEnum.date,
+                        StorageDataEnum.category,
+                        StorageDataEnum.amount,
+                        StorageDataEnum.desc,
                     ]
                 )
             logger.success("Storage created!")
@@ -59,29 +61,41 @@ class StorageManager:
     def _insert_many_rows(self, input_data: list[list]):
         try:
             for row in input_data:
-                with open(f"{self.path_to_storage}", "a") as file:
+                with open(self.path_to_storage, "a") as file:
                     writer = csv.writer(file)
                     writer.writerow(row)
         except (IOError, csv.Error) as error:
             logger.error(f"Error when trying to insert in storage: {error}")
             return error
 
-    def _get_data_dict(self) -> list:
-        query_data = []
-        with open(f"{self.path_to_storage}", "r") as file:
+    def _get_data_dict(self) -> list[dict]:
+        with open(self.path_to_storage, "r") as file:
             reader = csv.DictReader(file)
+            return list(reader)
 
-            for row in reader:
-                query_data.append(row)
-
-        return query_data
-
-    def _get_data_list(self) -> list:
-        query_data = []
-        with open(f"{self.path_to_storage}", "r") as file:
+    def _get_data_list(self) -> list[list]:
+        with open(self.path_to_storage, "r") as file:
             reader = csv.reader(file)
-            for row in reader:
-                query_data.append(row)
+            return list(reader)
 
-        return query_data
-
+    def _update_row(self, row_number: int, updated_data: dict):
+        rows = self._get_data_dict()
+        header = (
+            StorageDataEnum.date,
+            StorageDataEnum.category,
+            StorageDataEnum.amount,
+            StorageDataEnum.desc,
+        )
+        with open(self.path_to_storage, "w") as file:
+            writer = csv.DictWriter(
+                f=file,
+                fieldnames=header,
+            )
+            writer.writeheader()
+            for index, row in enumerate(rows, start=1):
+                if index == row_number:
+                    row[StorageDataEnum.date] = updated_data[StorageDataEnum.date]
+                    row[StorageDataEnum.category] = updated_data[StorageDataEnum.category]
+                    row[StorageDataEnum.amount] = updated_data[StorageDataEnum.amount]
+                    row[StorageDataEnum.desc] = updated_data[StorageDataEnum.desc]
+                writer.writerow(row)
