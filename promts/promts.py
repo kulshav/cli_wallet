@@ -87,8 +87,16 @@ class UserPromt:
         return "Input any day as a number. Default -> current"
 
     @staticmethod
-    def negative_date() -> str:
-        return "You entered a negative date.\n\nUse the --help flag for assistance"
+    def negative_or_zero_date() -> str:
+        return "You entered a negative or zero date.\n\nUse the --help flag for assistance"
+
+    @staticmethod
+    def month_not_exists() -> str:
+        return "You entered month that doesn`t exists"
+
+    @staticmethod
+    def day_not_exists() -> str:
+        return "You entered day that doesn`t exists"
 
     @staticmethod
     def ask_to_enter_record_id() -> str:
