@@ -3,9 +3,8 @@ import os
 
 from enum import Enum
 
-from loguru import logger
-
 from configs.config import settings
+from logs.logger import logger
 
 
 class StorageDataEnum(str, Enum):
@@ -38,16 +37,16 @@ class StorageManager:
                         StorageDataEnum.desc,
                     ]
                 )
-            logger.success("Storage created!")
+            logger.debug("Storage created!")
         else:
-            logger.info("Storage exists")
+            logger.debug("Storage exists")
 
     def _drop_storage(self):
         if os.path.exists(self.path_to_storage):
             os.remove(self.path_to_storage)
-            logger.success("Storage has been deleted!")
+            logger.debug("Storage has been deleted!")
         else:
-            logger.warning("Storage doesnt exists")
+            logger.debug("Storage doesnt exists")
 
     def _insert_row(self, input_data: list | tuple):
         try:
