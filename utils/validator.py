@@ -53,7 +53,7 @@ class InputValidator(BaseModel):
     def validate_date_format(cls, date_input: str) -> str | ValueError:
         try:
             datetime.strptime(date_input, "%Y-%m-%d")
-        except ValueError:
+        except (ValueError, TypeError):
             raise ValueError(user_promt.wrong_date_input_format())
         return date_input
 

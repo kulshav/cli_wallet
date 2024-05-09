@@ -26,13 +26,9 @@ class RecordApp(typer.Typer):
         i: bool = False,
     ):
         if not i:
-            validation_process = InputValidator(
-                date=date,
-                category=category,
-                amount=amount
-            )
-            validation_process()  # Raises error if validation failed
-
+            InputValidator.validate_date_format(date)
+            InputValidator.validate_category(category)
+            InputValidator.validate_amount(amount)
         else:
             # User have chosen interactive mode
             date, category, amount, desc = interactive_handler.record_insert_handler()
@@ -49,13 +45,7 @@ class RecordApp(typer.Typer):
         desc: str,
     ) -> str:
         search_result_data = query.get_record_filtered(date, category, amount, desc)
-        validation_process = InputValidator(
-            date=date,
-            category=category,
-            amount=amount,
-            search_data=search_result_data
-        )
-        validation_process()  # Raises error if validation failed
+        InputValidator.validate_search_data(search_result_data)
 
         search_result_message = "Search result:"
         for record in search_result_data:
@@ -83,14 +73,11 @@ class RecordApp(typer.Typer):
 
         if not i:
             record_to_edit = query.get_record_data_by_id(record_id)
-            validation_process = InputValidator(
-                record_id=record_id,
-                date=date,
-                category=category,
-                amount=amount,
-                record_data=record_to_edit,
-            )
-            validation_process()  # Raises error if validation failed
+            # InputValidator.validate_record_id(record_id)
+            # InputValidator.validate_date_format(date)
+            # InputValidator.validate_category(category)
+            # InputValidator.validate_amount(amount)
+            InputValidator.validate_record_data(record_to_edit)
 
             typer.echo(
                 f"--BEFORE EDITING--\n"

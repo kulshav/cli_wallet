@@ -24,13 +24,13 @@ records_app = RecordApp(
 )
 def insert_record(
     date: Annotated[str, None] = datetime.now().strftime("%Y-%m-%d"),
-    category: Annotated[str, None] = CategoryEnum.expense,
+    category: Annotated[str, None] = CategoryEnum.expense.value,
     amount: float = 0.0,
     desc: Annotated[str, None] = "",
     i: bool = False,  # Interactive mode shortened to --i for simple usages purposes
 ):
     """
-    Example usages\n\n:
+    Example usages:\n\n
     Today Expense: record add --amount=500.00 --description="Groceries"\n
     Your date Income: record add --date=2024-05-06 --category=Income --amount=500.00 --desc="scholarship"\n\n
 
@@ -92,7 +92,7 @@ def edit_records(
 ):
     """
     Edits any record by its ID\n
-    If you need to know record_id -> use 'record search' command\n\n
+    If you need to know record_id -> use 'record search'\n\n
 
     Edit without checking record (Not recommended)\n
     edit --record-id=1 --date=2024-02-02 --category=Expense --amount=500.00 --desc="Groceries"\n\n
