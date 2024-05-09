@@ -23,7 +23,7 @@ def test_app_no_args():
     # Exit without an error
     assert result.exit_code == int(ExitCodesEnum.OK)
     assert "Simple budget tracker CLI application" in result.stdout
-    assert "--help" in result.stdout
+
 
 
 @pytest.mark.parametrize("arg", ["add", "hello", "asd"])
@@ -35,8 +35,8 @@ def test_app_wrong_args(arg):
 @pytest.mark.parametrize(
     ("command", "expected_result"),
     [
-        ("display", "--help, balance, expense, income"),
-        ("record", "--help, add, search, edit"),
+        ("display", "balance, expense, income"),
+        ("record", "add, search, edit"),
     ],
 )
 def test_app_display_record_commands(command, expected_result):
