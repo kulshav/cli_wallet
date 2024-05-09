@@ -19,7 +19,7 @@ runner = CliRunner()
 
 
 def test_app_no_args():
-    result = runner.invoke(app, [])
+    result = runner.invoke(app, [], color=False)
     # Exit without an error
     assert result.exit_code == int(ExitCodesEnum.OK)
     assert "Simple budget tracker CLI application" in result.stdout
