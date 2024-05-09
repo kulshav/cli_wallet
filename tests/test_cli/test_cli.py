@@ -25,7 +25,6 @@ def test_app_no_args():
     assert "Simple budget tracker CLI application" in result.stdout
 
 
-
 @pytest.mark.parametrize("arg", ["add", "hello", "asd"])
 def test_app_wrong_args(arg):
     result = runner.invoke(app, args=[arg])
