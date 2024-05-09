@@ -40,10 +40,10 @@ def insert_record(
         validated_record = records_app.insert_record(date, category, amount, desc, i)
         return typer.echo(
             user_promt.successful_record_input(
-                date=validated_record,
-                category=category,
-                amount=amount,
-                desc=desc,
+                date=validated_record[0],
+                category=validated_record[1],
+                amount=validated_record[2],
+                desc=validated_record[3],
             )
         )
     except (ValueError, TypeError) as error:

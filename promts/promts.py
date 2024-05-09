@@ -137,7 +137,7 @@ class UserPromt:
         desc: str,
     ):
         return (
-            f"\nID: {record_id}\n\n"
+            f"ID: {record_id}\n"
             f"Date: {date}\n"
             f"Category: {category}\n"
             f"Amount: {amount}\n"

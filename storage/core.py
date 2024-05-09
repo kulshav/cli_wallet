@@ -80,10 +80,10 @@ class StorageManager:
     def _update_row(self, row_number: int, updated_data: dict):
         rows = self._get_data_dict()
         header = (
-            StorageDataEnum.date,
-            StorageDataEnum.category,
-            StorageDataEnum.amount,
-            StorageDataEnum.desc,
+            StorageDataEnum.date.value,
+            StorageDataEnum.category.value,
+            StorageDataEnum.amount.value,
+            StorageDataEnum.desc.value,
         )
         with open(self.path_to_storage, "w") as file:
             writer = csv.DictWriter(
@@ -93,10 +93,10 @@ class StorageManager:
             writer.writeheader()
             for index, row in enumerate(rows, start=1):
                 if index == row_number:
-                    row[StorageDataEnum.date] = updated_data[StorageDataEnum.date]
-                    row[StorageDataEnum.category] = updated_data[
-                        StorageDataEnum.category
+                    row[StorageDataEnum.date.value] = updated_data[StorageDataEnum.date.value]
+                    row[StorageDataEnum.category.value] = updated_data[
+                        StorageDataEnum.category.value
                     ]
-                    row[StorageDataEnum.amount] = updated_data[StorageDataEnum.amount]
-                    row[StorageDataEnum.desc] = updated_data[StorageDataEnum.desc]
+                    row[StorageDataEnum.amount.value] = updated_data[StorageDataEnum.amount.value]
+                    row[StorageDataEnum.desc.value] = updated_data[StorageDataEnum.desc.value]
                 writer.writerow(row)
