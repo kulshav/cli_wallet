@@ -2,6 +2,7 @@ import logging
 
 from configs.config import settings
 
+
 class MyLogger:
     def __init__(self, name, log_file=None, log_level=logging.DEBUG):
         self.logger = logging.getLogger(name)
