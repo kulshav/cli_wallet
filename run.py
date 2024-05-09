@@ -19,6 +19,6 @@ def cli_application_description():
     """
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # start cli application
     app()

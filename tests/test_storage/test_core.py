@@ -85,7 +85,7 @@ class TestStorageManager:
                     StorageDataEnum.amount.value: "1000",
                     StorageDataEnum.desc.value: "Test Update",
                 },
-            )
+            ),
         ],
     )
     def test_storage_manager_update_row(
@@ -101,10 +101,7 @@ class TestStorageManager:
         rows_before = storage_instance._get_data_dict()
         total_records_before = len(rows_before)
 
-        storage_instance._update_row(
-            row_number=record_id,
-            updated_data=updated_data
-        )
+        storage_instance._update_row(row_number=record_id, updated_data=updated_data)
 
         rows_after = storage_instance._get_data_dict()
         total_records_after = len(rows_after)
@@ -117,4 +114,3 @@ class TestStorageManager:
 
         assert row_data_after_update == expected_result
         assert total_records_after == total_records_before
-

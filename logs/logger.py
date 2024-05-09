@@ -21,4 +21,6 @@ class MyLogger:
         return self.logger
 
 
-logger = MyLogger(name="CLI Wallet Logger", log_file=settings.DEBUG_LOG_PATH).get_logger()
+logger = MyLogger(
+    name="CLI Wallet Logger", log_file=settings.DEBUG_LOG_PATH
+).get_logger()

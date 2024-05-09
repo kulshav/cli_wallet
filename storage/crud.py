@@ -52,9 +52,7 @@ class QueryManager(StorageManager):
         rows = self._get_data_dict()
 
         for row in rows:
-            row_date = datetime.strptime(
-                row[StorageDataEnum.date], "%Y-%m-%d"
-            ).date()
+            row_date = datetime.strptime(row[StorageDataEnum.date], "%Y-%m-%d").date()
 
             # Filter by year
             if year is not None and row_date.year != year:
@@ -134,10 +132,7 @@ class QueryManager(StorageManager):
                 return row
 
     def edit_record_by_id(self, record_id: int, updated_data: dict):
-        self._update_row(
-            row_number=record_id,
-            updated_data=updated_data
-        )
+        self._update_row(row_number=record_id, updated_data=updated_data)
 
 
 query = QueryManager()

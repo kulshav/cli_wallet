@@ -108,7 +108,9 @@ class InteractiveModeHandler:
         )
 
         # Asking to confirm editing, default - stop!
-        confirmation = typer.prompt(user_promt.check_record_to_edit(), default="n", type=bool)
+        confirmation = typer.prompt(
+            user_promt.check_record_to_edit(), default="n", type=bool
+        )
         if not confirmation:
             return Exit()
 

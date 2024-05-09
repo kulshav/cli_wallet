@@ -98,7 +98,9 @@ class RecordApp(typer.Typer):
             )
 
             # Editing process confirmation from user, default = Exit app
-            if not typer.prompt(user_promt.check_record_to_edit(), default="n", type=bool):
+            if not typer.prompt(
+                user_promt.check_record_to_edit(), default="n", type=bool
+            ):
                 return Exit()
         else:
             record_id, date, category, amount, desc = (

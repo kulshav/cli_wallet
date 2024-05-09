@@ -19,8 +19,14 @@ class TestCrud:
             record = query_instance.get_record_data_by_id(index)
 
             assert row[StorageDataEnum.date.value] == record[StorageDataEnum.date.value]
-            assert row[StorageDataEnum.category.value] == record[StorageDataEnum.category.value]
-            assert row[StorageDataEnum.amount.value] == record[StorageDataEnum.amount.value]
+            assert (
+                row[StorageDataEnum.category.value]
+                == record[StorageDataEnum.category.value]
+            )
+            assert (
+                row[StorageDataEnum.amount.value]
+                == record[StorageDataEnum.amount.value]
+            )
             assert row[StorageDataEnum.desc.value] == record[StorageDataEnum.desc.value]
 
             if record[StorageDataEnum.category] == CategoryEnum.income:
@@ -34,7 +40,11 @@ class TestCrud:
         current_balance = query_instance.get_current_balance()
         assert (total_income - total_expense) == current_balance
 
-        all_time_total_income = query_instance.get_all_time_total_amount(CategoryEnum.income)
-        all_time_total_expense = query_instance.get_all_time_total_amount(CategoryEnum.expense)
+        all_time_total_income = query_instance.get_all_time_total_amount(
+            CategoryEnum.income
+        )
+        all_time_total_expense = query_instance.get_all_time_total_amount(
+            CategoryEnum.expense
+        )
         assert all_time_total_income == total_income
         assert all_time_total_expense == total_expense

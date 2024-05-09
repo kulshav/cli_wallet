@@ -88,7 +88,9 @@ class UserPromt:
 
     @staticmethod
     def negative_or_zero_date() -> str:
-        return "You entered a negative or zero date.\n\nUse the --help flag for assistance"
+        return (
+            "You entered a negative or zero date.\n\nUse the --help flag for assistance"
+        )
 
     @staticmethod
     def month_not_exists() -> str:

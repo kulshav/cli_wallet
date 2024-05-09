@@ -17,6 +17,7 @@ def query_instance():
 
     yield query_instance
 
+
 @pytest.fixture
 def restart_storage(storage_instance):
     storage_instance._drop_storage()
@@ -29,7 +30,7 @@ def get_headers():
         StorageDataEnum.date,
         StorageDataEnum.category,
         StorageDataEnum.amount,
-        StorageDataEnum.desc
+        StorageDataEnum.desc,
     ]
 
 
@@ -53,4 +54,3 @@ def populate_storage(storage_instance):
     ]
     storage_instance._insert_many_rows(income_records)
     storage_instance._insert_many_rows(expense_records)
-

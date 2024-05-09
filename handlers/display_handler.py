@@ -55,6 +55,4 @@ class DisplayApp(typer.Typer):
             else ""
         )
 
-        return (
-            f"{echo_msg}" f"All time {category.lower()}: {all_time_total}\n"
-        )
+        return f"{echo_msg}" f"All time {category.lower()}: {all_time_total}\n"

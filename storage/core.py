@@ -94,7 +94,9 @@ class StorageManager:
             for index, row in enumerate(rows, start=1):
                 if index == row_number:
                     row[StorageDataEnum.date] = updated_data[StorageDataEnum.date]
-                    row[StorageDataEnum.category] = updated_data[StorageDataEnum.category]
+                    row[StorageDataEnum.category] = updated_data[
+                        StorageDataEnum.category
+                    ]
                     row[StorageDataEnum.amount] = updated_data[StorageDataEnum.amount]
                     row[StorageDataEnum.desc] = updated_data[StorageDataEnum.desc]
                 writer.writerow(row)
