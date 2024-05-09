@@ -25,11 +25,11 @@ class TestValidator:
         assert str(error.value) == expected_result
 
     @pytest.mark.parametrize(("category", "expected_result"), [
-        ("20-05-05", user_promt.wrong_category_format(CategoryEnum.income, CategoryEnum.expense)),
-        ("asd", user_promt.wrong_category_format(CategoryEnum.income, CategoryEnum.expense)),
-        ("123", user_promt.wrong_category_format(CategoryEnum.income, CategoryEnum.expense)),
-        ("2024-2024-2024", user_promt.wrong_category_format(CategoryEnum.income, CategoryEnum.expense)),
-        ("2024-13-123", user_promt.wrong_category_format(CategoryEnum.income, CategoryEnum.expense)),
+        ("20-05-05", user_promt.wrong_category_format(CategoryEnum.income.value, CategoryEnum.expense.value)),
+        ("asd", user_promt.wrong_category_format(CategoryEnum.income.value, CategoryEnum.expense.value)),
+        ("123", user_promt.wrong_category_format(CategoryEnum.income.value, CategoryEnum.expense.value)),
+        ("2024-2024-2024", user_promt.wrong_category_format(CategoryEnum.income.value, CategoryEnum.expense.value)),
+        ("2024-13-123", user_promt.wrong_category_format(CategoryEnum.income.value, CategoryEnum.expense.value)),
     ])
     def test_input_wrong_category_validator(self, category, expected_result):
         with pytest.raises(ValueError) as error:
