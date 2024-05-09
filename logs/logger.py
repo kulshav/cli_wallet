@@ -1,5 +1,6 @@
 import logging
 
+from configs.config import settings
 
 class MyLogger:
     def __init__(self, name, log_file=None, log_level=logging.DEBUG):
@@ -19,4 +20,4 @@ class MyLogger:
         return self.logger
 
 
-logger = MyLogger(name="CLI Wallet Logger", log_file="logs/debug.log").get_logger()
+logger = MyLogger(name="CLI Wallet Logger", log_file=settings.DEBUG_LOG_PATH).get_logger()
