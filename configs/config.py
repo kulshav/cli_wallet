@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
     PATH_TO_STORAGE: str
+    DEBUG_LOG_PATH: str
 
 
 settings = Settings()
