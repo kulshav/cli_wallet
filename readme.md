@@ -69,23 +69,13 @@ python3 run.py COMMAND SUBCOMMAND --ARGS
 
 _Simple examples of usages provided below_
 
+### 1. Display command
 
-### 1. Show available commands
-```bash
-python3 run.py --help
-```
-or just
-```bash
-python3 run.py --help
-```
-
-### 2. Display command
-
-#### 2.1 Get current balance
+#### 1.1 Get current balance
 ```bash
 python3 run.py display balance
 ```
-#### 2.2 Get income (same for expense) 
+#### 1.2 Get income (same for expense) 
 
 All time income
 ```bash
@@ -118,9 +108,9 @@ python3 run.py display income --i
 > Total inc2024 May 9 : 31000
 ```
 
-### 3. Record command
+### 2. Record command
 
-#### 3.1 Insert new record
+#### 2.1 Insert new record
 ```bash
 python3 run.py record add --date=2024-05-09 --category=Income --amount=500 --desc="Scolarship"
 
@@ -146,7 +136,7 @@ Amount: 500.0
 Description: Scolarship
 ```
 
-#### 3.2 Search for existing record
+#### 2.2 Search for existing record
 ```bash
 python3 run.py record search --date=2024-02-02 --category=Expense --amount=500.00 --desc="Groceries"
 
@@ -169,7 +159,7 @@ Amount: 500.0
 Description: Groceries
 ```
 
-#### 3.3 Editing existing record
+#### 2.3 Editing existing record
 
 You can use provided ID in record search to edit this record
 
