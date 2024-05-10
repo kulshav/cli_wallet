@@ -121,7 +121,7 @@ Amount: 500.0
 Description: Scolarship
 ```
 
-Tired of typing? Again? Use interactive mode
+_Tired of typing? Again? Use interactive mode_
 ```bash
 python3 run.py record add --i
 > Input date in format (YYYY-MM-DD) Press Enter(today) -> [2024-05-09]: Enter
